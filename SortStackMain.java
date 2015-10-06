@@ -17,7 +17,7 @@ public class SortStackMain
 		for(int i = 0; i < COUNT; i++)
 			stack.push(generator.nextInt(MAX_VALUE));
 		
-		//stack = sortStack(stack);
+		stack = sortStack(stack);
 		
 		boolean countIsGood = stack.size() == COUNT;
 			
@@ -41,9 +41,36 @@ public class SortStackMain
 			System.out.println("It's all good");
 	}
 	
-	/*static Stack<Integer> sortStack(Stack<Integer> stack)
+	static Stack<Integer> sortStack(Stack<Integer> stack)
 	{
 		//A completer
-		
-	}*/
+            
+                /* 
+                 * Deux piles supplementaires sont utilisees:
+                 * une qui contient les elements tries (stackSorted) 
+                 * une qui stocke les elements en attente (stackTemp)
+                 * Un element est en attente quand l element en tete de stack est superieur a l element en tete de stackSorted
+                 */
+            
+                Stack<Integer> stackSorted = new Stack<Integer>();
+                Stack<Integer> stackTemp = new Stack<Integer>();
+                while (!stack.empty())
+                {
+                    if(stackSorted.empty() || stackSorted.peek() >= stack.peek())
+                    {
+                        // On supprime l element en tete de stack et on le met dans stackSorted
+                        stackSorted.push(stack.pop());
+                        while (!stackTemp.empty())
+                        {
+                            // On supprime l element en tete de stackTemp et on le met dans stackSorted
+                            stackSorted.push(stackTemp.pop());
+                        }
+                    } else {
+                        // On supprime l element en tete de stackSorted et on le met dans stackTemp
+                        stackTemp.push(stackSorted.pop());
+                    }
+                }
+               
+                return stackSorted;      
+	}
 }
