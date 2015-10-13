@@ -71,8 +71,14 @@ public class LinkedListQueue<AnyType> implements Queue<AnyType>
 	public void pop() throws EmptyQueueException
 	{
 		//A completer
-		last.next = last.next.next;
-                size--;
+		if(size != 0)
+		{
+			last.next = last.next.next;
+            size--;
+		}
+		else {
+			throw new EmptyQueueException();
+		}
 	}
 	
 	//Ajoute un element a la fin de la file

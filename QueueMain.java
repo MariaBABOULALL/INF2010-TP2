@@ -18,7 +18,6 @@ public class QueueMain
 			listQueue.push(pushCounter);
 			pushCounter++;
 		}
-                //((LinkedListQueue)listQueue).afficher();
 		
 		if(arrayQueue.size() != COUNT*2 || listQueue.size() != COUNT*2)
 		{
@@ -32,7 +31,6 @@ public class QueueMain
 				arrayQueue.pop();
 				listQueue.pop();
 				popCounter++;
-                                //System.out.println(arrayQueue.size() + "        " + ((ArrayQueue)arrayQueue).startindex);
 			} 
 			catch (EmptyQueueException e) 
 			{
@@ -40,25 +38,21 @@ public class QueueMain
 				return;
 			}
 		}
-         
 		
 		for(int i = 0; i < COUNT*2.5; i++)
 		{
 			arrayQueue.push(pushCounter);
-                // System.out.println(arrayQueue.size() + "        " + ((ArrayQueue)arrayQueue).startindex);
 			listQueue.push(pushCounter);
 			pushCounter++;
 		}
 		
 		for(int i = 0; i < COUNT*3.5; i++)
 		{
-                       System.out.println(arrayQueue.peek() +  "        " + popCounter );
 			if(arrayQueue.peek() != popCounter || listQueue.peek() != popCounter)
 			{
 				System.out.println("Erreur: l'ordre de sortie(FIFO) n'est pas respecte");
 				return;
-			}}
-			/*
+			}	
 			try 
 			{
 				arrayQueue.pop();
@@ -101,7 +95,7 @@ public class QueueMain
 		catch (EmptyQueueException e){}
 		
 		
-		System.out.print("It's all good");*/
+		System.out.print("It's all good");
                        
 	}
 }

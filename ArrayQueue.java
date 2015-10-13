@@ -9,8 +9,8 @@ public class ArrayQueue<AnyType> implements Queue<AnyType>
 	@SuppressWarnings("unchecked")
 	public ArrayQueue() 
 	{
-		//A completer
-		table = (AnyType[])new Object[0];
+		// On crée un nouveau tableau de la taille size (0 à l'initialisation)
+		table = (AnyType[])new Object[size];
 		
 	}
 	
@@ -31,7 +31,6 @@ public class ArrayQueue<AnyType> implements Queue<AnyType>
 	//complexit� asymptotique: O(1)
 	public AnyType peek()
 	{
-		//A completer
 		if(size==0)
 		{ 
 			return null;
@@ -45,9 +44,20 @@ public class ArrayQueue<AnyType> implements Queue<AnyType>
 	//complexit� asymptotique: O(1)
 	public void pop() throws EmptyQueueException
 	{
-		//A completer
-		startindex++;
-                size--;
+		// Si la taille est supérieure à zéro
+		if(size > 0)
+		{
+			// On remplace l'élément en tête de file par null
+			table[startindex] = null;
+			// On incrémente l'index du début et diminue la taille
+			startindex++;
+	        size--;	
+		}
+		// Sinon on lance l'exception
+		else {
+			throw new EmptyQueueException();
+		}
+		
 	}
 	
 	//Ajoute un element a la fin de la file
@@ -55,23 +65,25 @@ public class ArrayQueue<AnyType> implements Queue<AnyType>
 	//complexit� asymptotique: O(1) ( O(N) lorsqu'un redimensionnement est necessaire )
 	public void push(AnyType item)
 	{
-		//A completer
+		// Si le tableau n'a aucune case on le remplace par un tableau à une case
 		if(table.length == 0)
 		{
 			AnyType[] newTable = (AnyType[])new Object[1];
-			table = newTable;
-                       
-		} else if (table.length == size ) {
-                        AnyType[] newTable = (AnyType[])new Object[2*size];
-			for (int i=0; i<size; i++)
+			table = newTable;            
+		}
+		// Si la taille du tableau - le start index est égal à la taille
+		else if (table.length-startindex == size) {
+			// On double la taille du tableau en prenant bien en compte la position du startindex
+            AnyType[] newTable = (AnyType[])new Object[2*(size+startindex)];
+			for (int i = 0; i < size+startindex; i++)
 			{
 				newTable[i] = table[i];
 			}
 			table = newTable;
-		} 
-		table[size] = item;
-		size++;
-		
+		}
+		// On place l'objet item à la fin de la file
+		table[size+startindex] = item;	
+		size++;	
 	}
    
 	//Redimensionne la file. La capacite est multipliee par un facteur de resizeFactor.
@@ -82,11 +94,11 @@ public class ArrayQueue<AnyType> implements Queue<AnyType>
 	{
 		//A completer
 		AnyType[] newTable = (AnyType[])new Object[size*resizeFactor];
-		for (int i=0; i<=size; i++)
+		for (int i = 0; i <= size; i++)
 		{
 			newTable[i] = table[i];
 		}
-                table = newTable;
+        table = newTable;
 	}   
 }
 
